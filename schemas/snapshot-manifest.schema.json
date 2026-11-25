@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/prakashjpn1-star/impulseatlas/schemas/snapshot-manifest.schema.json",
+  "title": "Complete same-build snapshot identity",
+  "type": "object",
+  "properties": {
+    "format_version": {
+      "const": 1
+    },
+    "snapshot_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "tick": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "engine_build": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "scene_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "config_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "payload_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "payload_bytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    }
+  },
+  "required": [
+    "format_version",
+    "snapshot_id",
+    "run_id",
+    "tick",
+    "engine_build",
+    "scene_digest",
+    "config_digest",
+    "payload_digest",
+    "payload_bytes"
+  ],
+  "additionalProperties": false
+}

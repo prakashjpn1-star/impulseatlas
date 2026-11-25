@@ -1,0 +1,847 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/prakashjpn1-star/impulseatlas/schemas/tick-command.schema.json",
+  "title": "Ordered tick-boundary command",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "target_tick": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "command_order": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "kind": {
+          "const": "CREATE_BODY"
+        },
+        "body": {
+          "type": "object",
+          "properties": {
+            "body_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "type": {
+              "enum": [
+                "STATIC",
+                "KINEMATIC",
+                "DYNAMIC"
+              ]
+            },
+            "position": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "number",
+                  "minimum": -100,
+                  "maximum": 100
+                },
+                {
+                  "type": "number",
+                  "minimum": -100,
+                  "maximum": 100
+                }
+              ],
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "angle": {
+              "type": "number"
+            },
+            "linear_velocity": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "number",
+                  "minimum": -150,
+                  "maximum": 150
+                },
+                {
+                  "type": "number",
+                  "minimum": -150,
+                  "maximum": 150
+                }
+              ],
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "angular_velocity": {
+              "type": "number"
+            },
+            "bullet": {
+              "type": "boolean"
+            },
+            "fixtures": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "fixture_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "shape": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "CIRCLE"
+                          },
+                          "radius": {
+                            "type": "number",
+                            "minimum": 0.025,
+                            "maximum": 5
+                          },
+                          "center": {
+                            "type": "array",
+                            "prefixItems": [
+                              {
+                                "type": "number",
+                                "minimum": -100,
+                                "maximum": 100
+                              },
+                              {
+                                "type": "number",
+                                "minimum": -100,
+                                "maximum": 100
+                              }
+                            ],
+                            "minItems": 2,
+                            "maxItems": 2
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "radius",
+                          "center"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "POLYGON"
+                          },
+                          "vertices": {
+                            "type": "array",
+                            "items": {
+                              "type": "array",
+                              "prefixItems": [
+                                {
+                                  "type": "number",
+                                  "minimum": -100,
+                                  "maximum": 100
+                                },
+                                {
+                                  "type": "number",
+                                  "minimum": -100,
+                                  "maximum": 100
+                                }
+                              ],
+                              "minItems": 2,
+                              "maxItems": 2
+                            },
+                            "minItems": 3,
+                            "maxItems": 8
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "vertices"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  },
+                  "material": {
+                    "type": "object",
+                    "properties": {
+                      "density": {
+                        "type": "number",
+                        "exclusiveMinimum": 0
+                      },
+                      "friction": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "restitution": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      }
+                    },
+                    "required": [
+                      "density",
+                      "friction",
+                      "restitution"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "category_bits": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 65535
+                  },
+                  "mask_bits": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 65535
+                  }
+                },
+                "required": [
+                  "fixture_id",
+                  "shape",
+                  "material",
+                  "category_bits",
+                  "mask_bits"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1,
+              "maxItems": 16
+            }
+          },
+          "required": [
+            "body_id",
+            "type",
+            "position",
+            "angle",
+            "linear_velocity",
+            "angular_velocity",
+            "bullet",
+            "fixtures"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "target_tick",
+        "command_order",
+        "kind",
+        "body"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "target_tick": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "command_order": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "kind": {
+          "const": "DESTROY_BODY"
+        },
+        "body": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "generation": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "id",
+            "generation"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "target_tick",
+        "command_order",
+        "kind",
+        "body"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "target_tick": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "command_order": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "kind": {
+          "const": "APPLY_FORCE"
+        },
+        "body": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "generation": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "id",
+            "generation"
+          ],
+          "additionalProperties": false
+        },
+        "force": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "number",
+              "minimum": -1000000000,
+              "maximum": 1000000000
+            },
+            {
+              "type": "number",
+              "minimum": -1000000000,
+              "maximum": 1000000000
+            }
+          ],
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "world_point": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            },
+            {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            }
+          ],
+          "minItems": 2,
+          "maxItems": 2
+        }
+      },
+      "required": [
+        "target_tick",
+        "command_order",
+        "kind",
+        "body",
+        "force",
+        "world_point"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "target_tick": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "command_order": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "kind": {
+          "const": "APPLY_IMPULSE"
+        },
+        "body": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "generation": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "id",
+            "generation"
+          ],
+          "additionalProperties": false
+        },
+        "impulse": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "number",
+              "minimum": -1000000000,
+              "maximum": 1000000000
+            },
+            {
+              "type": "number",
+              "minimum": -1000000000,
+              "maximum": 1000000000
+            }
+          ],
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "world_point": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            },
+            {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            }
+          ],
+          "minItems": 2,
+          "maxItems": 2
+        }
+      },
+      "required": [
+        "target_tick",
+        "command_order",
+        "kind",
+        "body",
+        "impulse",
+        "world_point"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "target_tick": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "command_order": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "kind": {
+          "const": "SET_KINEMATIC_MOTION"
+        },
+        "body": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "generation": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "id",
+            "generation"
+          ],
+          "additionalProperties": false
+        },
+        "linear_velocity": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "number",
+              "minimum": -150,
+              "maximum": 150
+            },
+            {
+              "type": "number",
+              "minimum": -150,
+              "maximum": 150
+            }
+          ],
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "angular_velocity": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "target_tick",
+        "command_order",
+        "kind",
+        "body",
+        "linear_velocity",
+        "angular_velocity"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "target_tick": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "command_order": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "kind": {
+          "const": "CREATE_JOINT"
+        },
+        "joint": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "joint_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "kind": {
+                  "const": "DISTANCE"
+                },
+                "body_a": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "body_b": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "local_anchor_a": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "type": "number",
+                      "minimum": -100,
+                      "maximum": 100
+                    },
+                    {
+                      "type": "number",
+                      "minimum": -100,
+                      "maximum": 100
+                    }
+                  ],
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "local_anchor_b": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "type": "number",
+                      "minimum": -100,
+                      "maximum": 100
+                    },
+                    {
+                      "type": "number",
+                      "minimum": -100,
+                      "maximum": 100
+                    }
+                  ],
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "rest_length": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "collide_connected": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "joint_id",
+                "kind",
+                "body_a",
+                "body_b",
+                "local_anchor_a",
+                "local_anchor_b",
+                "rest_length",
+                "collide_connected"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "joint_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "kind": {
+                  "const": "REVOLUTE"
+                },
+                "body_a": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "body_b": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "local_anchor_a": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "type": "number",
+                      "minimum": -100,
+                      "maximum": 100
+                    },
+                    {
+                      "type": "number",
+                      "minimum": -100,
+                      "maximum": 100
+                    }
+                  ],
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "local_anchor_b": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "type": "number",
+                      "minimum": -100,
+                      "maximum": 100
+                    },
+                    {
+                      "type": "number",
+                      "minimum": -100,
+                      "maximum": 100
+                    }
+                  ],
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "collide_connected": {
+                  "type": "boolean"
+                },
+                "limits": {
+                  "type": "object",
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean"
+                    },
+                    "lower_angle": {
+                      "type": "number"
+                    },
+                    "upper_angle": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "enabled",
+                    "lower_angle",
+                    "upper_angle"
+                  ],
+                  "additionalProperties": false
+                },
+                "motor": {
+                  "type": "object",
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean"
+                    },
+                    "target_speed": {
+                      "type": "number"
+                    },
+                    "max_torque": {
+                      "type": "number",
+                      "minimum": 0
+                    }
+                  },
+                  "required": [
+                    "enabled",
+                    "target_speed",
+                    "max_torque"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "joint_id",
+                "kind",
+                "body_a",
+                "body_b",
+                "local_anchor_a",
+                "local_anchor_b",
+                "collide_connected",
+                "limits",
+                "motor"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "required": [
+        "target_tick",
+        "command_order",
+        "kind",
+        "joint"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "target_tick": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "command_order": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "kind": {
+          "const": "DESTROY_JOINT"
+        },
+        "joint": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "generation": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "id",
+            "generation"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "target_tick",
+        "command_order",
+        "kind",
+        "joint"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "target_tick": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "command_order": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "kind": {
+          "const": "SET_MATERIAL"
+        },
+        "body": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "generation": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "id",
+            "generation"
+          ],
+          "additionalProperties": false
+        },
+        "fixture_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "material": {
+          "type": "object",
+          "properties": {
+            "density": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "friction": {
+              "type": "number",
+              "minimum": 0
+            },
+            "restitution": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "density",
+            "friction",
+            "restitution"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "target_tick",
+        "command_order",
+        "kind",
+        "body",
+        "fixture_id",
+        "material"
+      ],
+      "additionalProperties": false
+    }
+  ]
+}

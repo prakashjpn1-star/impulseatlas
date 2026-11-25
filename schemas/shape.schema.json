@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/prakashjpn1-star/impulseatlas/schemas/shape.schema.json",
+  "title": "Supported circle or convex polygon shape",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "CIRCLE"
+        },
+        "radius": {
+          "type": "number",
+          "minimum": 0.025,
+          "maximum": 5
+        },
+        "center": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            },
+            {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            }
+          ],
+          "minItems": 2,
+          "maxItems": 2
+        }
+      },
+      "required": [
+        "kind",
+        "radius",
+        "center"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "POLYGON"
+        },
+        "vertices": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "prefixItems": [
+              {
+                "type": "number",
+                "minimum": -100,
+                "maximum": 100
+              },
+              {
+                "type": "number",
+                "minimum": -100,
+                "maximum": 100
+              }
+            ],
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "minItems": 3,
+          "maxItems": 8
+        }
+      },
+      "required": [
+        "kind",
+        "vertices"
+      ],
+      "additionalProperties": false
+    }
+  ]
+}

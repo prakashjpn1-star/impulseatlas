@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/prakashjpn1-star/impulseatlas/schemas/joint.schema.json",
+  "title": "Distance or revolute joint",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "joint_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "kind": {
+          "const": "DISTANCE"
+        },
+        "body_a": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "body_b": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "local_anchor_a": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            },
+            {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            }
+          ],
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "local_anchor_b": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            },
+            {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            }
+          ],
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "rest_length": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "collide_connected": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "joint_id",
+        "kind",
+        "body_a",
+        "body_b",
+        "local_anchor_a",
+        "local_anchor_b",
+        "rest_length",
+        "collide_connected"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "joint_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "kind": {
+          "const": "REVOLUTE"
+        },
+        "body_a": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "body_b": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "local_anchor_a": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            },
+            {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            }
+          ],
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "local_anchor_b": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            },
+            {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            }
+          ],
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "collide_connected": {
+          "type": "boolean"
+        },
+        "limits": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "lower_angle": {
+              "type": "number"
+            },
+            "upper_angle": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "enabled",
+            "lower_angle",
+            "upper_angle"
+          ],
+          "additionalProperties": false
+        },
+        "motor": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "target_speed": {
+              "type": "number"
+            },
+            "max_torque": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "enabled",
+            "target_speed",
+            "max_torque"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "joint_id",
+        "kind",
+        "body_a",
+        "body_b",
+        "local_anchor_a",
+        "local_anchor_b",
+        "collide_connected",
+        "limits",
+        "motor"
+      ],
+      "additionalProperties": false
+    }
+  ]
+}

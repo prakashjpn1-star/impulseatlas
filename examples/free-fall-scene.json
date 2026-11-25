@@ -1,0 +1,58 @@
+{
+  "format_version": 1,
+  "scene_id": "free-fall",
+  "seed": 20261125,
+  "settings": {
+    "dt_numerator": 1,
+    "dt_denominator": 60,
+    "gravity": [
+      0,
+      -9.81
+    ],
+    "velocity_iterations": 8,
+    "position_iterations": 3,
+    "warm_start": true,
+    "linear_slop_m": 0.005,
+    "max_position_correction_m": 0.2,
+    "restitution_threshold_mps": 1
+  },
+  "bodies": [
+    {
+      "body_id": "ball",
+      "type": "DYNAMIC",
+      "position": [
+        0,
+        10
+      ],
+      "angle": 0,
+      "linear_velocity": [
+        0,
+        0
+      ],
+      "angular_velocity": 0,
+      "bullet": false,
+      "fixtures": [
+        {
+          "fixture_id": "ball-circle",
+          "shape": {
+            "kind": "CIRCLE",
+            "radius": 0.5,
+            "center": [
+              0,
+              0
+            ]
+          },
+          "material": {
+            "density": 1,
+            "friction": 0,
+            "restitution": 0
+          },
+          "category_bits": 1,
+          "mask_bits": 65535
+        }
+      ]
+    }
+  ],
+  "joints": [],
+  "commands": []
+}

@@ -1,0 +1,11 @@
+{
+  "fixture_id": "free-fall",
+  "ticks": 60,
+  "dt_seconds": 0.016666666666666666,
+  "initial_y": 10,
+  "initial_vy": 0,
+  "gravity_y": -9.81,
+  "expected_y": 5.01325,
+  "expected_vy": -9.81,
+  "position_absolute_tolerance_m": 1e-8
+}

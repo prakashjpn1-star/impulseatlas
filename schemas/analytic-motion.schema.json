@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/prakashjpn1-star/impulseatlas/schemas/analytic-motion.schema.json",
+  "title": "Hand-calculated motion oracle",
+  "type": "object",
+  "properties": {
+    "fixture_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "ticks": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "dt_seconds": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "initial_y": {
+      "type": "number"
+    },
+    "initial_vy": {
+      "type": "number"
+    },
+    "gravity_y": {
+      "type": "number"
+    },
+    "expected_y": {
+      "type": "number"
+    },
+    "expected_vy": {
+      "type": "number"
+    },
+    "position_absolute_tolerance_m": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    }
+  },
+  "required": [
+    "fixture_id",
+    "ticks",
+    "dt_seconds",
+    "initial_y",
+    "initial_vy",
+    "gravity_y",
+    "expected_y",
+    "expected_vy",
+    "position_absolute_tolerance_m"
+  ],
+  "additionalProperties": false
+}

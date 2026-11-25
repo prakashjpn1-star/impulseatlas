@@ -1,0 +1,17 @@
+{
+  "target_tick": 0,
+  "command_order": 1,
+  "kind": "APPLY_IMPULSE",
+  "body": {
+    "id": "ball",
+    "generation": 1
+  },
+  "impulse": [
+    1,
+    0
+  ],
+  "world_point": [
+    0,
+    10
+  ]
+}
